@@ -76,6 +76,7 @@ int pack_ball(int colour, int id) {
                 partner_id = b->id;
             }
         }
+        b = b->next;
     }
     printf("done mutex");
     sem_post(&mutex);
