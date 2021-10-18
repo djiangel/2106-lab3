@@ -8,10 +8,10 @@ sem_t sem1;
 sem_t sem2;
 sem_t sem3;
 sem_t mutex;
-typedef struct ballinfo {
+typedef struct BALLINFO {
     int id;
     int colour;
-    ballinfo next;
+    struct BALLINFO *next;
 } ballinfo;
 ballinfo *head;
 sem_t *sem_list[4];
@@ -50,8 +50,8 @@ int pack_ball(int colour, int id) {
     ballinfo *ball = malloc(sizeof(ballinfo));
     ball->id = id;
     ball->colour = colour;
-    bool *wait = true;
-    int *partner_id = NULL;
+    bool wait = true;
+    int partner_id = -1;
     if (head == NULL) {
         head = ball;
     } else {
@@ -78,7 +78,7 @@ int pack_ball(int colour, int id) {
     } else {
         sem_post(sem_list[colour]);
     }
-    if (partner_id == NULL) {
+    if (partner_id == -1) {
         b = head;
         while (b != NULL) {
             if (b->colour == colour) {
