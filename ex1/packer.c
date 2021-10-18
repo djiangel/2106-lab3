@@ -76,10 +76,13 @@ int pack_ball(int colour, int id) {
     }
     sem_post(&mutex);
     if (wait) {
+        printf("%d wait\n", id);
         sem_wait(sem_list[colour]);
     } else {
+        printf("%d signal\n", id);
         sem_post(sem_list[colour]);
     }
+    printf("%d\n", id);
     if (partner_id == -1) {
         b = head;
         while (b != NULL) {
