@@ -91,6 +91,6 @@ int pack_ball(int colour, int id) {
             }
         }
     }
-    printf(partner_id);
+    printf("%d\n", partner_id);
     return partner_id;
 }
