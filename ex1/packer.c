@@ -47,15 +47,12 @@ void packer_destroy(void) {
 
 int pack_ball(int colour, int id) {
     // Write your code here.
-    printf("WHAT");
     sem_wait(&mutex);
-    printf("in mutex");
     ballinfo *ball = malloc(sizeof(ballinfo));
     ball->id = id;
     ball->colour = colour;
     bool wait = true;
     int partner_id = -1;
-    printf("here1");
     if (head == NULL) {
         head = ball;
     } else {
@@ -66,12 +63,9 @@ int pack_ball(int colour, int id) {
         }
         temp->next = ball;
     }
-    printf("here2");
     ball->next = NULL;
     ballinfo *b = head;
-    printf("here3");
     while (b != NULL) {
-        printf("in while loop");
         if (b->colour == colour) {
             if (b->id != id) {
                 wait = false;
@@ -79,12 +73,8 @@ int pack_ball(int colour, int id) {
             }
         }
         b = b->next;
-        printf("next while loop");
     }
-    printf("done mutex");
     sem_post(&mutex);
-    printf("outofmutex");
-    printf("helloooo");
     if (wait) {
         sem_wait(sem_list[colour]);
     } else {
