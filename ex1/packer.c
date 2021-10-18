@@ -1,6 +1,7 @@
 #include "packer.h"
 #include "semaphore.h"
 #include <stdbool.h>
+#include <stdio.h>
 #include <stdlib.h>
 
 // You can declare global variables here
