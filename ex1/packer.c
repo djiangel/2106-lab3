@@ -49,6 +49,7 @@ int pack_ball(int colour, int id) {
     // Write your code here.
     printf("WHAT");
     sem_wait(&mutex);
+    printf("in mutex");
     ballinfo *ball = malloc(sizeof(ballinfo));
     ball->id = id;
     ball->colour = colour;
@@ -74,7 +75,9 @@ int pack_ball(int colour, int id) {
             }
         }
     }
+    printf("done mutex");
     sem_post(&mutex);
+    printf("outofmutex");
     printf("helloooo");
     if (wait) {
         sem_wait(sem_list[colour]);
