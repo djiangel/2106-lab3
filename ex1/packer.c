@@ -55,6 +55,7 @@ int pack_ball(int colour, int id) {
     ball->colour = colour;
     bool wait = true;
     int partner_id = -1;
+    printf("here1");
     if (head == NULL) {
         head = ball;
     } else {
@@ -65,6 +66,7 @@ int pack_ball(int colour, int id) {
         }
         temp->next = ball;
     }
+    printf("here2");
     ball->next = NULL;
     ballinfo *b = head;
     while (b != NULL) {
