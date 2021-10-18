@@ -47,6 +47,7 @@ void packer_destroy(void) {
 
 int pack_ball(int colour, int id) {
     // Write your code here.
+    printf("WHAT");
     sem_wait(&mutex);
     ballinfo *ball = malloc(sizeof(ballinfo));
     ball->id = id;
