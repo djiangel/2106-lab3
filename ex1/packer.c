@@ -20,9 +20,9 @@ sem_t *sem_list[4];
 void packer_init(void) {
     // Write initialization code here (called once at the start of the program).
     sem_init(&mutex, 0, 1);
-    sem_init(&sem1, 0, 1);
-    sem_init(&sem2, 0, 1);
-    sem_init(&sem3, 0, 1);
+    sem_init(&sem1, 0, 0);
+    sem_init(&sem2, 0, 0);
+    sem_init(&sem3, 0, 0);
     sem_list[1] = &sem1;
     sem_list[2] = &sem2;
     sem_list[3] = &sem3;
@@ -78,11 +78,14 @@ int pack_ball(int colour, int id) {
     } else {
         sem_post(sem_list[colour]);
     }
-    while (b != NULL) {
-        if (b->colour == colour) {
-            if (b->id != id) {
-                wait = false;
-                partner_id = b->id;
+    if (partner_id == NULL) {
+        b = head;
+        while (b != NULL) {
+            if (b->colour == colour) {
+                if (b->id != id) {
+                    wait = false;
+                    partner_id = b->id;
+                }
             }
         }
     }
