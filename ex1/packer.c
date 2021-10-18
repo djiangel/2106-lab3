@@ -69,7 +69,9 @@ int pack_ball(int colour, int id) {
     printf("here2");
     ball->next = NULL;
     ballinfo *b = head;
+    printf("here3");
     while (b != NULL) {
+        printf("in while loop");
         if (b->colour == colour) {
             if (b->id != id) {
                 wait = false;
@@ -77,6 +79,7 @@ int pack_ball(int colour, int id) {
             }
         }
         b = b->next;
+        printf("next while loop");
     }
     printf("done mutex");
     sem_post(&mutex);
