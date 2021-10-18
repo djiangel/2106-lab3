@@ -73,6 +73,7 @@ int pack_ball(int colour, int id) {
         }
     }
     sem_post(&mutex);
+    printf("helloooo");
     if (wait) {
         sem_wait(sem_list[colour]);
     } else {
