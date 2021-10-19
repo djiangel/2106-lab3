@@ -104,7 +104,6 @@ void pack_ball(int colour, int id, int *other_ids) {
         sem_wait(sem_list[colour]);
     }
     if (*count_list[colour] < number_per_pack) {
-        count_list[colour] += 1;
         b = head;
         int count = 0;
         while (b != NULL) {
@@ -132,5 +131,6 @@ void pack_ball(int colour, int id, int *other_ids) {
             }
             sem_post(&mutex1);
         }
+        count_list[colour] += 1;
     }
 }
