@@ -67,6 +67,7 @@ int pack_ball(int colour, int id) {
         }
         temp->next = ball;
     }
+    sem_post(&mutex1);
     ball->next = NULL;
     ballinfo *b = head;
     ballinfo *prev;
@@ -81,17 +82,14 @@ int pack_ball(int colour, int id) {
                 } else {
                     prev->next = b->next;
                 }
+                sem_post(sem_list[colour]);
                 break;
             }
         }
         prev = b;
         b = b->next;
     }
-    sem_post(&mutex1);
     printf("partnerid: %d\n", partner_id);
-    if (!wait) {
-        sem_post(sem_list[colour]);
-    }
     sem_post(&mutex);
     if (wait) {
         sem_wait(sem_list[colour]);
