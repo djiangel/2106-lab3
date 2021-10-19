@@ -80,8 +80,11 @@ int pack_ball(int colour, int id) {
                 } else {
                     prev->next = b->next;
                 }
+                printf("signal color");
                 sem_post(sem_list[colour]);
+                printf("someone waits here");
                 sem_wait(&mutex1);
+                printf("wait is done");
                 break;
             }
         }
