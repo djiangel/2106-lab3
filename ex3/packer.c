@@ -63,8 +63,8 @@ void pack_ball(int colour, int id, int *other_ids) {
     ball->id = id;
     ball->colour = colour;
     count_list[colour] -= 1;
-    // printf("ballid: %d", id);
-    // printf("%d: count: %d\n", count_list[colour]);
+    printf("ballid: %d", id);
+    printf("%d: count: %d\n", count_list[colour]);
     if (head == NULL) {
         head = ball;
     } else {
@@ -79,6 +79,7 @@ void pack_ball(int colour, int id, int *other_ids) {
     ballinfo *b = head;
     ballinfo *prev;
     if (count_list[colour] == 0) {
+        printf("inside count 0\n");
         int count = 0;
         wait = false;
         while (b != NULL) {
@@ -91,19 +92,25 @@ void pack_ball(int colour, int id, int *other_ids) {
             prev = b;
             b = b->next;
         }
+        printf("other ids", other_ids);
         for (int i = 1; i < number_per_pack; i++) {
+            printf("signal 3x\n");
             sem_post(sem_list[colour]);
         }
         count_list[colour] += 1;
+        printf("%d should be 1", count_list[colour]);
     }
     if (wait == false) {
+        printf("ballid: %d waiting here", id);
         sem_wait(&mutex1);
     }
     sem_post(&mutex);
     if (wait) {
+        printf("ballid: %d waiting at %d", id, colour);
         sem_wait(sem_list[colour]);
     }
     if (*count_list[colour] < number_per_pack) {
+        printf("ballid: %d in here", id);
         b = head;
         int count = 0;
         while (b != NULL) {
@@ -117,6 +124,7 @@ void pack_ball(int colour, int id, int *other_ids) {
             b = b->next;
         }
         if (*count_list[colour] == number_per_pack - 1) {
+            printf("ballid: %d in here once", id);
             b = head;
             while (b != NULL) {
                 if (b->colour == colour) {
@@ -132,5 +140,7 @@ void pack_ball(int colour, int id, int *other_ids) {
             sem_post(&mutex1);
         }
         count_list[colour] += 1;
+        printf("other ids2", other_ids);
+        printf("ending count: %d", count_list[colour]);
     }
 }
