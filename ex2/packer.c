@@ -88,7 +88,10 @@ int pack_ball(int colour, int id) {
         b = b->next;
     }
     if (wait == false) {
+        int value;
         printf("someone waits here\n");
+        sem_getvalue(&mutex1, &value);
+        printf("value: %d", value);
         sem_wait(&mutex1);
         printf("wait is done\n");
     }
