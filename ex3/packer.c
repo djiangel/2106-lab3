@@ -31,9 +31,9 @@ void packer_init(int balls_per_pack) {
     sem_list[1] = &sem1;
     sem_list[2] = &sem2;
     sem_list[3] = &sem3;
-    count_list[1] = balls_per_pack;
-    count_list[2] = balls_per_pack;
-    count_list[3] = balls_per_pack;
+    count_list[1] = &balls_per_pack;
+    count_list[2] = &balls_per_pack;
+    count_list[3] = &balls_per_pack;
     number_per_pack = balls_per_pack;
     head = NULL;
 }
