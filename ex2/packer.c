@@ -88,12 +88,12 @@ int pack_ball(int colour, int id) {
         prev = b;
         b = b->next;
     }
-    printf("partnerid: %d\n", partner_id);
+    printf("%d partnerid: %d\n", id, partner_id);
     sem_post(&mutex);
     if (wait) {
         sem_wait(sem_list[colour]);
     }
-    printf("partnerid1: %d\n", partner_id);
+    printf("%d partnerid1: %d\n", id, partner_id);
     if (partner_id == -1) {
         b = head;
         while (b != NULL) {
@@ -113,7 +113,7 @@ int pack_ball(int colour, int id) {
             b = b->next;
         }
     }
+    printf("%d partnerid2: %d\n", id, partner_id);
     sem_post(&mutex1);
-    printf("partnerid2: %d\n", partner_id);
     return partner_id;
 }
