@@ -62,7 +62,9 @@ void pack_ball(int colour, int id, int *other_ids) {
     ballinfo *ball = malloc(sizeof(ballinfo));
     ball->id = id;
     ball->colour = colour;
-    count_list[colour] = count_list[colour] - 1;
+    count_list[colour] -= 1;
+    // printf("ballid: %d", id);
+    // printf("%d: count: %d\n", count_list[colour]);
     if (head == NULL) {
         head = ball;
     } else {
@@ -78,26 +80,21 @@ void pack_ball(int colour, int id, int *other_ids) {
     ballinfo *prev;
     if (count_list[colour] == 0) {
         int count = 0;
+        wait = false;
         while (b != NULL) {
             if (b->colour == colour) {
                 if (b->id != id) {
-                    wait = false;
                     other_ids[count] = b->id;
-                    count = count + 1;
-                    // if (b == head) {
-                    //     head = b->next;
-                    // } else {
-                    //     prev->next = b->next;
-                    // }
-                    count_list[colour] += 1;
-                    for (int i = 1; i < number_per_pack; i++) {
-                        sem_post(sem_list[colour]);
-                    }
+                    count += 1;
                 }
             }
             prev = b;
             b = b->next;
         }
+        for (int i = 1; i < number_per_pack; i++) {
+            sem_post(sem_list[colour]);
+        }
+        count_list[colour] += 1;
     }
     if (wait == false) {
         sem_wait(&mutex1);
