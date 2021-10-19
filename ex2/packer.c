@@ -22,7 +22,7 @@ sem_t *sem_list[4];
 void packer_init(void) {
     // Write initialization code here (called once at the start of the program).
     sem_init(&mutex, 0, 1);
-    sem_init(&mutex1, 0, 1);
+    sem_init(&mutex1, 0, 0);
     sem_init(&sem1, 0, 0);
     sem_init(&sem2, 0, 0);
     sem_init(&sem3, 0, 0);
@@ -56,7 +56,6 @@ int pack_ball(int colour, int id) {
     ball->colour = colour;
     bool wait = true;
     int partner_id = -1;
-    sem_wait(&mutex1);
     if (head == NULL) {
         head = ball;
     } else {
@@ -67,7 +66,6 @@ int pack_ball(int colour, int id) {
         }
         temp->next = ball;
     }
-    sem_post(&mutex1);
     ball->next = NULL;
     ballinfo *b = head;
     ballinfo *prev;
@@ -83,6 +81,7 @@ int pack_ball(int colour, int id) {
                     prev->next = b->next;
                 }
                 sem_post(sem_list[colour]);
+                sem_wait(&mutex1);
                 break;
             }
         }
@@ -95,7 +94,6 @@ int pack_ball(int colour, int id) {
         sem_wait(sem_list[colour]);
     }
     printf("partnerid1: %d\n", partner_id);
-    sem_wait(&mutex1);
     if (partner_id == -1) {
         b = head;
         while (b != NULL) {
