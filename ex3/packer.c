@@ -106,7 +106,7 @@ void pack_ball(int colour, int id, int *other_ids) {
     if (wait) {
         sem_wait(sem_list[colour]);
     }
-    if (count_list[colour] < number_per_pack) {
+    if (*count_list[colour] < number_per_pack) {
         count_list[colour] += 1;
         b = head;
         int count = 0;
@@ -120,7 +120,7 @@ void pack_ball(int colour, int id, int *other_ids) {
             prev = b;
             b = b->next;
         }
-        if (count_list[colour] == number_per_pack - 1) {
+        if (*count_list[colour] == number_per_pack - 1) {
             b = head;
             while (b != NULL) {
                 if (b->colour == colour) {
