@@ -69,7 +69,6 @@ int pack_ball(int colour, int id) {
     ball->next = NULL;
     ballinfo *b = head;
     ballinfo *prev;
-    printf("ballid: %d\n", id);
     while (b != NULL) {
         if (b->colour == colour) {
             if (b->id != id) {
@@ -88,17 +87,12 @@ int pack_ball(int colour, int id) {
         b = b->next;
     }
     if (wait == false) {
-        printf("someone waits here\n");
         sem_wait(&mutex1);
-        printf("wait is done\n");
     }
-    printf("%d partnerid: %d\n", id, partner_id);
     sem_post(&mutex);
     if (wait) {
         sem_wait(sem_list[colour]);
-        printf("%d woke up\n", id);
     }
-    printf("%d partnerid1: %d\n", id, partner_id);
     if (partner_id == -1) {
         b = head;
         while (b != NULL) {
@@ -119,6 +113,5 @@ int pack_ball(int colour, int id) {
         }
         sem_post(&mutex1);
     }
-    printf("%d partnerid2: %d\n", id, partner_id);
     return partner_id;
 }
