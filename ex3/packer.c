@@ -17,7 +17,7 @@ typedef struct BALLINFO {
 } ballinfo;
 ballinfo *head;
 sem_t *sem_list[4];
-int *count_list[4];
+int count_list[4];
 int number_per_pack;
 
 void packer_init(int balls_per_pack) {
@@ -31,9 +31,9 @@ void packer_init(int balls_per_pack) {
     sem_list[1] = &sem1;
     sem_list[2] = &sem2;
     sem_list[3] = &sem3;
-    count_list[1] = &balls_per_pack;
-    count_list[2] = &balls_per_pack;
-    count_list[3] = &balls_per_pack;
+    count_list[1] = balls_per_pack;
+    count_list[2] = balls_per_pack;
+    count_list[3] = balls_per_pack;
     number_per_pack = balls_per_pack;
     head = NULL;
 }
@@ -109,7 +109,7 @@ void pack_ball(int colour, int id, int *other_ids) {
         printf("ballid: %d waiting at %d", id, colour);
         sem_wait(sem_list[colour]);
     }
-    if (*count_list[colour] < number_per_pack) {
+    if (count_list[colour] < number_per_pack) {
         printf("ballid: %d in here", id);
         b = head;
         int count = 0;
@@ -123,7 +123,7 @@ void pack_ball(int colour, int id, int *other_ids) {
             prev = b;
             b = b->next;
         }
-        if (*count_list[colour] == number_per_pack - 1) {
+        if (count_list[colour] == number_per_pack - 1) {
             printf("ballid: %d in here once", id);
             b = head;
             while (b != NULL) {
