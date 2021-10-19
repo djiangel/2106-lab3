@@ -80,10 +80,10 @@ int pack_ball(int colour, int id) {
                 } else {
                     prev->next = b->next;
                 }
-                printf("someone waits here\n");
-                sem_wait(&mutex1);
                 printf("signal color\n");
                 sem_post(sem_list[colour]);
+                printf("someone waits here\n");
+                sem_wait(&mutex1);
                 printf("wait is done\n");
                 break;
             }
@@ -95,6 +95,7 @@ int pack_ball(int colour, int id) {
     sem_post(&mutex);
     if (wait) {
         sem_wait(sem_list[colour]);
+        printf("%d woke up\n", id);
     }
     printf("%d partnerid1: %d\n", id, partner_id);
     if (partner_id == -1) {
