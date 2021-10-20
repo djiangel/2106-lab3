@@ -67,7 +67,7 @@ int request_for_table(group_state *state, int num_people) {
     // Return the id of the table you want this group to sit at.
     // TODO
     state->people = num_people;
-    state->table = NULL;
+    state->table_id = -1;
     state->next = NULL;
     sem_init(&state->sem, 0, 0);
     int index = num_people-1;
@@ -92,7 +92,6 @@ int request_for_table(group_state *state, int num_people) {
         sem_wait(&state->sem);
     }
     sem_wait(&mutex);
-    bool assign = false;
     if (wait) {
         group_state *g;
         group_state *prev;

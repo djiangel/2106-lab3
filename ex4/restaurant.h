@@ -1,5 +1,6 @@
 #ifndef RESTAURANT_H
 #define RESTAURANT_H
+#include "semaphore.h"
 
 // You may add fields to this struct, but do not modify the name of this struct:
 typedef struct GROUP_STATE{
