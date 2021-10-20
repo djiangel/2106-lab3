@@ -37,6 +37,7 @@ void restaurant_init(int num_tables[5]) {
             table->occupied = false;
             table->id = count;
             tables[i][a] = *table;
+            printf("tableid first: %d\n", table->id);
             count += 1;
         }
     }
@@ -112,6 +113,7 @@ int request_for_table(group_state *state, int num_people) {
     int tableid_assigned;
     for (int i = 0; i < number_of_tables[index]; i++) {
         tableinfo *table = &tables[index][i];
+        printf("tableid: %d\n", table->id);
         if (table->occupied == false) {
             state->table_id = table->id;
             tableid_assigned = table->id;
