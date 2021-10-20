@@ -117,7 +117,6 @@ int request_for_table(group_state *state, int num_people) {
     for (int i = 0; i < num_tables_unchanged[index]; i++) {
         tableinfo *table = &tables[index][i];
         if (table->occupied == false) {
-            printf("tableid: %d\n", table->id);
             state->table_id = table->id;
             tableid_assigned = table->id;
             table->occupied = true;
@@ -133,6 +132,7 @@ void leave_table(group_state *state) {
     // Write your code here.
     // TODO
     sem_wait(&mutex);
+    number_of_tables[index] += 1;
     int table_id = state->table_id;
     int index = state->people - 1;
     for (int i = 0; i < num_tables_unchanged[index]; i++) {
