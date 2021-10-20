@@ -4,6 +4,10 @@
 // You may add fields to this struct, but do not modify the name of this struct:
 typedef struct {
     // TODO: Add your fields here
+    int people;
+    tableinfo *table;
+    group_state *next;
+    sem_t sem;
 } group_state;
 
 
