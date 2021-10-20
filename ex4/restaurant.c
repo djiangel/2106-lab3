@@ -32,7 +32,7 @@ void restaurant_init(int num_tables[5]) {
     }
     int count = 0;
     for (int i = 0; i < n; i++) {
-        for (int a = 0; a < num_tables[a]; a++) {
+        for (int a = 0; a < num_tables[i]; a++) {
             tableinfo *table= malloc(sizeof(tableinfo));
             table->occupied = false;
             table->id = count;
@@ -119,6 +119,7 @@ int request_for_table(group_state *state, int num_people) {
             break;
         }
     }
+    number_of_tables[index] -= 1;
     sem_post(&mutex);
     return tableid_assigned;
 }
