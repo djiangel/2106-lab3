@@ -6,6 +6,7 @@
 
 // You can declare global variables here
 int number_of_tables[5];
+int num_tables_unchanged[5];
 typedef struct TABLEINFO {
     bool occupied;
     int id;
@@ -37,12 +38,14 @@ void restaurant_init(int num_tables[5]) {
             table->occupied = false;
             table->id = count;
             tables[i][a] = *table;
-            printf("tableid first: %d\n", table->id);
             count += 1;
         }
     }
     for (int i = 0; i < 5; i++) {
         number_of_tables[i] = num_tables[i];
+    }
+    for (int i = 0; i < 5; i++) {
+        num_tables_unchanged[i] = num_tables[i];
     }
     sem_init(&mutex, 0, 1);
     sem_init(&sem1, 0, number_of_tables[0]);
@@ -111,10 +114,10 @@ int request_for_table(group_state *state, int num_people) {
         }
     }
     int tableid_assigned;
-    for (int i = 0; i < number_of_tables[index]; i++) {
+    for (int i = 0; i < num_tables_unchanged[index]; i++) {
         tableinfo *table = &tables[index][i];
-        printf("tableid: %d\n", table->id);
         if (table->occupied == false) {
+            printf("tableid: %d\n", table->id);
             state->table_id = table->id;
             tableid_assigned = table->id;
             table->occupied = true;
@@ -132,7 +135,7 @@ void leave_table(group_state *state) {
     sem_wait(&mutex);
     int table_id = state->table_id;
     int index = state->people - 1;
-    for (int i = 0; i < number_of_tables[index]; i++) {
+    for (int i = 0; i < num_tables_unchanged[index]; i++) {
         tableinfo *table = &tables[index][i];
         if (table->id == table_id) {
             table->occupied = false;
