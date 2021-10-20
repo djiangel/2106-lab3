@@ -132,9 +132,9 @@ void leave_table(group_state *state) {
     // Write your code here.
     // TODO
     sem_wait(&mutex);
-    number_of_tables[index] += 1;
     int table_id = state->table_id;
     int index = state->people - 1;
+    number_of_tables[index] += 1;
     for (int i = 0; i < num_tables_unchanged[index]; i++) {
         tableinfo *table = &tables[index][i];
         if (table->id == table_id) {
